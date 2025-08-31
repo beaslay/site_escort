@@ -1,0 +1,173 @@
+:root{
+  --bg:#0b0b0d; --fg:#e9e9ef; --muted:#b7b7c7; --pill:#14141a;
+  --halo-bg: rgba(255,255,255,.12);
+  --notch: 12px;
+  --panel-w: clamp(104px, 20vw, 156px);
+  --bgimg-overlay: rgba(0,0,0,.28);
+}
+
+*{ box-sizing: border-box; }
+html, body { height: 100%; }
+html{ background:#0b0b0d; }
+
+body{
+  margin:0;
+  background:
+    linear-gradient(0deg, var(--bgimg-overlay), var(--bgimg-overlay)),
+    url("/paris.jpg") center / cover no-repeat fixed,
+    radial-gradient(60% 80% at 70% 0%, #141418 0%, #0b0b0d 60%);
+  color:var(--fg);
+  font: 500 15px/1.5 system-ui, -apple-system, Segoe UI, Inter, Roboto, Arial, sans-serif;
+}
+
+.stage{ min-height:100vh; min-height:100dvh; display:grid; place-items:center; padding:64px 20px; }
+.quote{ display:grid; gap:18px; place-items:center; text-align:center; max-width:760px; }
+.quote q{ font: 800 clamp(24px, 4vw, 40px)/1.12 ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Roboto, Arial, sans-serif; letter-spacing:.2px; }
+
+/* Bouton Julien™ + halo */
+.julien-btn{
+  position:fixed; left:16px; top:16px; z-index:50;
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 14px; border-radius:999px;
+  background:var(--pill); border:1px solid #20202a; color:#fff;
+  font-weight:700; letter-spacing:.4px; cursor:pointer;
+  box-shadow: 0 1px 1px rgba(0,0,0,.15);
+}
+.julien-btn:focus-visible{ outline:2px solid #3b3b4a; outline-offset:2px; }
+.julien-btn::before{
+  content:""; position:absolute; inset:-10px; border-radius:999px;
+  background:var(--halo-bg); filter:blur(14px); opacity:.6;
+  animation:pulse .9s ease-in-out infinite alternate; pointer-events:none;
+}
+.julien-btn[aria-expanded="true"]::before{ opacity:0; animation:none; }
+@keyframes pulse{ from{ transform:scale(1);} to{ transform:scale(1.05);} }
+
+/* CTA notch */
+.cta{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:12px 24px; min-height:44px; background:var(--pill);
+  border:1px solid #20202a; color:var(--fg);
+  letter-spacing:.03em; font-weight:600; text-decoration:none;
+  clip-path: polygon(var(--notch) 0, calc(100% - var(--notch)) 0, 100% var(--notch),
+                     100% calc(100% - var(--notch)), calc(100% - var(--notch)) 100%,
+                     var(--notch) 100%, 0 calc(100% - var(--notch)), 0 var(--notch));
+}
+.cta:focus-visible{ outline:2px solid #3b3b4a; outline-offset:2px; }
+
+/* Overlay gradient allégé */
+.backdrop{
+  position:fixed; inset:0; z-index:40;
+  background: linear-gradient(90deg,
+    rgba(0,0,0,.36) 0,
+    rgba(0,0,0,.30) var(--panel-w),
+    rgba(0,0,0,.12) calc(var(--panel-w) + 10vw),
+    rgba(0,0,0,.04) 100%);
+  border:0; padding:0; margin:0;
+}
+
+/* Menu pop sous le bouton Julien™ */
+.sidepanel{
+  position: fixed;
+  left: 16px;
+  top: calc(16px + var(--btn-h, 44px) + 20px); /* sous le bouton, espace accru en fonction du bouton réel */
+  z-index: 50;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+  contain: paint; /* isole la peinture pour limiter le coût des ombres/gradients internes */
+  width: auto; height: auto;
+}
+.sidepanel .divider{ display:none; }
+
+.sp-nav{ list-style:none; padding:0; margin:0; display:grid; gap:20px; justify-items:start; }
+
+.sp-link{
+  display:inline-flex; align-items:center;
+  border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04);
+  color:#fff; padding:8px 14px; border-radius:999px; text-decoration:none;
+  font: 700 15px/1.5 system-ui, -apple-system, Segoe UI, Inter, Roboto, Arial, sans-serif;
+  letter-spacing:.4px;
+  min-height:44px; width:fit-content; max-width:100%; white-space:nowrap; align-self:start;
+  position: relative; overflow: hidden; /* nécessaire pour le spotlight */
+  transition: transform .16s cubic-bezier(.2,.8,.2,1), background-color .16s, border-color .16s;
+}
+.sp-link:hover{
+  background:rgba(255,255,255,.07); border-color:rgba(255,255,255,.16);
+  transform: scale(1.045);
+}
+.sp-link:focus-visible{
+  outline:2px solid #3b3b4a; outline-offset:2px;
+  transform: scale(1.045);
+}
+/* Réserver la promotion GPU uniquement quand utile */
+.sp-link:hover, .sp-link:focus-visible{ will-change: transform; }
+
+
+/* Spotlight qui suit la souris */
+.sp-link::before{
+  content:""; position:absolute; inset:-1px; border-radius:inherit; pointer-events:none;
+  background: radial-gradient(120px circle at var(--x, 50%) var(--y, 50%),
+    rgba(255,255,255,.18), rgba(255,255,255,.06) 60%, rgba(255,255,255,0) 100%);
+  opacity:0; transition: opacity .18s ease; z-index:0;
+}
+.sp-link:hover::before{ opacity:.9; }
+
+/* Pop translucide en cascade à l’ouverture du panneau */
+@keyframes popFade {
+  0%   { opacity: 0;  transform: scale(.90) translateX(-2px); }
+  45%  { opacity: 1;  transform: scale(1.08); }
+  70%  {               transform: scale(1.02); }
+  100% {               transform: scale(1); }
+}
+.sidepanel.pop-seq .sp-link{
+  /* 1) pop d'entrée, 2) respiration subtile en boucle */
+  will-change: transform;
+  animation: popFade 480ms cubic-bezier(.2,.8,.2,1) both,
+             breathe 4500ms ease-in-out 520ms infinite alternate;
+}
+@keyframes breathe{
+  0%{ transform: scale(1); }
+  50%{ transform: scale(1.03); }
+  100%{ transform: scale(1); }
+}
+/* Décalage de la respiration entre boutons (dephasing) */
+.sidepanel.pop-seq .sp-nav li:nth-child(1) .sp-link{ animation-delay: 60ms, 520ms; }
+.sidepanel.pop-seq .sp-nav li:nth-child(2) .sp-link{ animation-delay: 120ms, 700ms; }
+.sidepanel.pop-seq .sp-nav li:nth-child(3) .sp-link{ animation-delay: 180ms, 880ms; }
+.sidepanel.pop-seq .sp-nav li:nth-child(4) .sp-link{ animation-delay: 240ms, 1060ms; }
+
+@media (max-width: 420px){
+  .sidepanel{ width:auto; }
+}
+
+/* iOS/Android: éviter les bugs de background fixed sur mobile */
+@media (max-width: 768px){
+  body{ background-attachment: scroll; }
+}
+
+/* Très petits écrans: autoriser le wrap des labels et réduire les espacements */
+@media (max-width: 360px){
+  .sp-link{ white-space: normal; }
+  .sp-nav{ gap: 14px; }
+}
+
+/* Appareils à pointeur grossier (mobile/tablette) : alléger les effets visuels */
+@media (pointer: coarse){
+  .sp-link{ transition: background-color .12s, border-color .12s; }
+  .sp-link:hover, .sp-link:focus-visible{ transform:none; box-shadow:none; }
+  .sp-link::before{
+    background: radial-gradient(80px circle at var(--x, 50%) var(--y, 50%),
+      rgba(255,255,255,.14), rgba(255,255,255,.05) 60%, rgba(255,255,255,0) 100%);
+  }
+  .julien-btn::before{ filter: blur(10px); }
+  .sidepanel.pop-seq .sp-link{ animation: popFade 480ms cubic-bezier(.2,.8,.2,1) both; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .julien-btn::before{ animation:none; }
+  .sp-link{ transition:none; }
+  .sp-link:hover, .sp-link:focus-visible{ transform:none; box-shadow:none; }
+  .sidepanel.pop-seq .sp-link{ animation:none; }
+}
