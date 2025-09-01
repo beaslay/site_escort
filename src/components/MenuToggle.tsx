@@ -2,7 +2,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-type Props = { open: boolean } & React.SVGProps<SVGSVGElement>;
+type Props = {
+  open: boolean;
+} & React.ComponentPropsWithoutRef<typeof motion.svg>;
 
 export default function MenuToggle({ open, ...rest }: Props) {
   return (
