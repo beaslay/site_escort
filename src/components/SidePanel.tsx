@@ -1,4 +1,4 @@
- import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 type Props = { open: boolean; onClose: () => void; children?: React.ReactNode };
