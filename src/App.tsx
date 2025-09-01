@@ -101,7 +101,18 @@ export default function App(){
       <SidePanel open={open} onClose={() => setOpen(false)}>
         <ul className="sp-nav">
           <li><a className="sp-link" href="#secretariat" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave}>Secrétariat</a></li>
-          <li><a className="sp-link" href="#qui" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave}>Qui je suis&nbsp;?</a></li>
+          <li><a
+            className="sp-link qui-link"
+            href="/qui-je-suis.html"
+            onMouseMove={onSpotlightMove}
+            onMouseLeave={onSpotlightLeave}
+            onClick={(e) => {
+              if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+              e.preventDefault();
+              document.documentElement.classList.add('page-leave');
+              setTimeout(() => { window.location.href = '/qui-je-suis.html'; }, 320);
+            }}
+          >Qui je suis&nbsp;?</a></li>
           <li><a className="sp-link" href="#portfolio" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave}>Portfolio</a></li>
           <li><a className="sp-link" href="#services" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave}>Services</a></li>
         </ul>
