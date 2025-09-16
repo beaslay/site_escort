@@ -61,8 +61,26 @@ html.page-leave body::after{ opacity:1; }
   clip-path: polygon(var(--notch) 0, calc(100% - var(--notch)) 0, 100% var(--notch),
                      100% calc(100% - var(--notch)), calc(100% - var(--notch)) 100%,
                      var(--notch) 100%, 0 calc(100% - var(--notch)), 0 var(--notch));
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 .cta:focus-visible{ outline:2px solid #3b3b4a; outline-offset:2px; }
+.cta:hover{
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.2);
+  transform: translateY(-1px);
+}
+
+/* Style spécial pour le bouton Secrétariat IA */
+.cta:has-text("Secrétariat IA"), .cta[data-ai] {
+  background: linear-gradient(135deg, #667eea 20%, #764ba2 80%);
+  border-color: rgba(102, 126, 234, 0.3);
+  color: white;
+}
+.cta:has-text("Secrétariat IA"):hover, .cta[data-ai]:hover {
+  background: linear-gradient(135deg, #7c8ceb 20%, #8a5bb8 80%);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
 
 /* Overlay gradient allégé */
 .backdrop{
