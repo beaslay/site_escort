@@ -3,9 +3,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import SidePanel from "./components/SidePanel";
 import MenuToggle from "./components/MenuToggle";
+import ChatBot from "./components/ChatBot";
+import ChatToggle from "./components/ChatToggle";
 
 export default function App(){
   const [open, setOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
   const prefersReduced = useReducedMotion();
   const btnRef = useRef<HTMLButtonElement|null>(null);
   const rafRef = useRef<number|null>(null);
@@ -126,11 +129,24 @@ export default function App(){
           >
             La vérité c’est l’affaire de l’âme, non du corps.
           </motion.q>
-          <a className="cta" href="#secretariat">Secrétariat</a>
+          <button 
+            className="cta" 
+            onClick={() => setChatOpen(true)}
+          >
+            Secrétariat IA
+          </button>
         </figure>
       </main>
 
-      {null}
+      <ChatToggle 
+        onClick={() => setChatOpen(true)} 
+        isOpen={chatOpen} 
+      />
+      
+      <ChatBot 
+        isOpen={chatOpen} 
+        onClose={() => setChatOpen(false)} 
+      />
     </>
   );
 }
