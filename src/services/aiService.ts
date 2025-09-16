@@ -17,7 +17,8 @@ export class AIService {
   
   constructor() {
     // En production, ces valeurs viendraient des variables d'environnement
-    this.apiKey = process.env.VITE_OPENAI_API_KEY || '';
+    const envApiKey = import.meta.env?.VITE_OPENAI_API_KEY;
+    this.apiKey = typeof envApiKey === 'string' ? envApiKey : '';
     this.baseUrl = 'https://api.openai.com/v1';
   }
 
