@@ -3,12 +3,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import SidePanel from "./components/SidePanel";
 import MenuToggle from "./components/MenuToggle";
-import ChatBot from "./components/ChatBot";
-import ChatToggle from "./components/ChatToggle";
 
 export default function App(){
   const [open, setOpen] = useState(false);
-  const [chatOpen, setChatOpen] = useState(false);
   const prefersReduced = useReducedMotion();
   const btnRef = useRef<HTMLButtonElement|null>(null);
   const rafRef = useRef<number|null>(null);
@@ -105,18 +102,18 @@ export default function App(){
         <ul className="sp-nav">
           <li><a
             className="sp-link"
-            href="/secretariat.html"
+            href="secretariat.html"
             onMouseMove={onSpotlightMove}
             onMouseLeave={onSpotlightLeave}
           >Secrétariat</a></li>
           <li><a
             className="sp-link qui-link"
-            href="/qui-je-suis.html"
+            href="qui-je-suis.html"
             onMouseMove={onSpotlightMove}
             onMouseLeave={onSpotlightLeave}
-          >Qui je suis&nbsp;?</a></li>
-          <li><a className="sp-link" href="/portfolio.html" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave}>Portfolio</a></li>
-          <li><a className="sp-link" href="/services.html" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave}>Services</a></li>
+          >Qui je suis ?</a></li>
+          <li><a className="sp-link" href="portfolio.html" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave}>Portfolio</a></li>
+          <li><a className="sp-link" href="services.html" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave}>Services</a></li>
         </ul>
       </SidePanel>
 
@@ -129,24 +126,11 @@ export default function App(){
           >
             La vérité c’est l’affaire de l’âme, non du corps.
           </motion.q>
-          <button 
-            className="cta" 
-            onClick={() => setChatOpen(true)}
-          >
+          <a className="cta" href="secretariat.html">
             Secrétariat IA
-          </button>
+          </a>
         </figure>
       </main>
-
-      <ChatToggle 
-        onClick={() => setChatOpen(true)} 
-        isOpen={chatOpen} 
-      />
-      
-      <ChatBot 
-        isOpen={chatOpen} 
-        onClose={() => setChatOpen(false)} 
-      />
     </>
   );
 }

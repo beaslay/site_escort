@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap");
+
 :root{
   --bg:#0b0b0d; --fg:#e9e9ef; --muted:#b7b7c7; --pill:#14141a;
   --halo-bg: rgba(255,255,255,.12);
@@ -33,6 +35,56 @@ html.page-leave body::after{ opacity:1; }
 .stage{ min-height:100vh; min-height:100dvh; display:grid; place-items:center; padding:64px 20px; }
 .quote{ display:grid; gap:18px; place-items:center; text-align:center; max-width:760px; }
 .quote q{ font: 800 clamp(24px, 4vw, 40px)/1.12 ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Roboto, Arial, sans-serif; letter-spacing:.2px; }
+
+.secretariat-page{
+  text-align: center;
+  font-family: "Caveat", "Segoe UI", "Trebuchet MS", cursive;
+}
+
+.secretariat-page h1{
+  font-size: clamp(48px, 8vw, 72px);
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin: 0 0 28px;
+  display: inline-block;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.secretariat-page h1::after,
+.secretariat-page h1::before{
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(102,126,234,.9), rgba(118,75,162,.9));
+}
+
+.secretariat-page h1::after{
+  width: clamp(120px, 35vw, 220px);
+  bottom: 0;
+}
+
+.secretariat-page h1::before{
+  width: clamp(80px, 25vw, 160px);
+  bottom: -8px;
+}
+
+.secretariat-page p{
+  font-size: clamp(22px, 4vw, 30px);
+  line-height: 1.35;
+  margin: 0 auto 32px;
+  max-width: 720px;
+}
+
+.secretariat-page .cta{
+  font-family: inherit;
+  font-size: clamp(20px, 3vw, 26px);
+  padding: 18px 40px;
+  border-radius: 999px;
+}
 
 /* Bouton Julien™ + halo */
 .julien-btn{

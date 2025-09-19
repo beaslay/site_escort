@@ -1,0 +1,59 @@
+.chat-shell {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.chat-shell__container {
+  width: 100%;
+  max-width: 860px;
+  height: 80vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  border: 1px solid #d0d0d0;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.chat-shell__header,
+.chat-shell__feed,
+.chat-shell__composer {
+  padding: 16px 20px;
+  box-sizing: border-box;
+}
+
+.chat-shell__header {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.chat-shell__title {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.chat-shell__subtitle {
+  margin: 4px 0 0;
+  font-size: 0.875rem;
+  color: #666666;
+}
+
+.chat-shell__feed {
+  min-height: 0;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+
+.chat-shell__composer {
+  border-top: 1px solid #e5e5e5;
+}
+
+.chat-shell__placeholder {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #555555;
+}
